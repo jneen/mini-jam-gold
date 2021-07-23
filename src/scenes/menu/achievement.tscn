@@ -1,0 +1,10 @@
+[gd_scene format=2]
+
+[node name="achievement" type="TextureRect"]
+margin_right = 64.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

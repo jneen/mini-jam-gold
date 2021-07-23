@@ -1,0 +1,350 @@
+[gd_scene load_steps=25 format=2]
+
+[ext_resource path="res://assets/bg/menu.png" type="Texture" id=1]
+[ext_resource path="res://assets/styles/join_03.png" type="Texture" id=2]
+[ext_resource path="res://assets/font/FreePixel.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/font/fp.tres" type="DynamicFont" id=4]
+[ext_resource path="res://src/scenes/menu/lobby.gd" type="Script" id=5]
+[ext_resource path="res://assets/icons/loading.png" type="Texture" id=6]
+[ext_resource path="res://src/scenes/menu/loadinginfo.gd" type="Script" id=7]
+[ext_resource path="res://assets/font/fpbold.tres" type="DynamicFont" id=8]
+[ext_resource path="res://assets/styles/host_03.png" type="Texture" id=9]
+
+[sub_resource type="StyleBoxTexture" id=8]
+texture = ExtResource( 9 )
+region_rect = Rect2( 0, 0, 487, 273 )
+modulate_color = Color( 0.721569, 0.960784, 1, 1 )
+
+[sub_resource type="StyleBoxTexture" id=9]
+texture = ExtResource( 9 )
+region_rect = Rect2( 0, 0, 487, 273 )
+modulate_color = Color( 0.4, 0.392157, 0.392157, 1 )
+
+[sub_resource type="StyleBoxTexture" id=10]
+texture = ExtResource( 9 )
+region_rect = Rect2( 0, 0, 487, 273 )
+
+[sub_resource type="StyleBoxTexture" id=11]
+texture = ExtResource( 9 )
+region_rect = Rect2( 0, 0, 487, 273 )
+modulate_color = Color( 0.505882, 0.505882, 0.505882, 1 )
+
+[sub_resource type="StyleBoxTexture" id=12]
+texture = ExtResource( 9 )
+region_rect = Rect2( 0, 0, 487, 273 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 48
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 487, 273 )
+modulate_color = Color( 0.721569, 0.960784, 1, 1 )
+
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 487, 273 )
+modulate_color = Color( 0.4, 0.392157, 0.392157, 1 )
+
+[sub_resource type="StyleBoxTexture" id=6]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 487, 273 )
+
+[sub_resource type="StyleBoxTexture" id=7]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 487, 273 )
+modulate_color = Color( 0.505882, 0.505882, 0.505882, 1 )
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 487, 273 )
+
+[sub_resource type="Animation" id=13]
+resource_name = "rotate"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Icon:rect_rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+
+[sub_resource type="Theme" id=14]
+
+[sub_resource type="StyleBoxFlat" id=15]
+bg_color = Color( 0.12549, 0.12549, 0.12549, 0.52549 )
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="DynamicFont" id=3]
+size = 42
+font_data = ExtResource( 3 )
+
+[node name="Lobby" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 763, 466 )
+texture = ExtResource( 1 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ButtonContainer" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -423.5
+margin_top = -32.0
+margin_right = 423.5
+margin_bottom = 32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Host" type="Button" parent="ButtonContainer"]
+anchor_left = 0.268595
+anchor_top = -0.25
+anchor_right = 0.495277
+anchor_bottom = 1.25
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 8 )
+custom_styles/pressed = SubResource( 9 )
+custom_styles/focus = SubResource( 10 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 12 )
+custom_fonts/font = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Join" type="Button" parent="ButtonContainer"]
+anchor_left = 0.504723
+anchor_top = -0.25
+anchor_right = 0.731405
+anchor_bottom = 1.25
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/focus = SubResource( 6 )
+custom_styles/disabled = SubResource( 7 )
+custom_styles/normal = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="NameTextBox" type="LineEdit" parent="ButtonContainer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -93.0
+margin_top = -98.7335
+margin_right = 94.0
+margin_bottom = -74.7335
+align = 1
+placeholder_text = "Put a nice name..."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IPTextBox" type="LineEdit" parent="ButtonContainer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -93.0
+margin_top = -167.0
+margin_right = 94.0
+margin_bottom = -143.0
+align = 1
+placeholder_text = "IP Address (for joining)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KarmaLabel" type="Label" parent="."]
+anchor_top = 0.583333
+anchor_right = 1.0
+anchor_bottom = 0.606667
+margin_top = 30.0
+margin_bottom = 32.0
+custom_fonts/font = ExtResource( 4 )
+text = "What will you do today?"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="LoadingInfo" type="Label" parent="."]
+visible = false
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -7.0
+margin_bottom = 7.0
+text = "Loading Multiplayer..."
+align = 1
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Icon" type="TextureRect" parent="LoadingInfo"]
+modulate = Color( 1, 1, 1, 0.584314 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -32.0
+margin_top = -32.0
+margin_right = 32.0
+margin_bottom = 32.0
+rect_pivot_offset = Vector2( 32, 32 )
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AP" type="AnimationPlayer" parent="LoadingInfo"]
+anims/rotate = SubResource( 13 )
+
+[node name="Panel" type="Panel" parent="LoadingInfo"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -78.0
+margin_top = -48.0
+margin_right = 78.0
+margin_bottom = 47.0
+theme = SubResource( 14 )
+custom_styles/panel = SubResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lobby" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="PlayerList" type="RichTextLabel" parent="Lobby"]
+anchor_left = 0.870117
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/mono_font = ExtResource( 4 )
+custom_fonts/bold_italics_font = ExtResource( 8 )
+custom_fonts/normal_font = ExtResource( 4 )
+bbcode_enabled = true
+bbcode_text = "artPlayers list:
+
+[img=16x16]res://assets/icons/star.png[/img] Host
+Player"
+text = "artPlayers list:
+
+ Host
+Player"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ChatBox" type="Panel" parent="Lobby"]
+anchor_left = 0.0927734
+anchor_right = 0.870117
+anchor_bottom = 0.943333
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Chat" type="RichTextLabel" parent="Lobby/ChatBox"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+bbcode_enabled = true
+bbcode_text = "[center] [ == Welcome to the chat == ] [/center]
+"
+text = " [ == Welcome to the chat == ] 
+"
+scroll_following = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="SendMessage" type="Button" parent="Lobby"]
+anchor_left = 0.801672
+anchor_top = 0.943333
+anchor_right = 0.870032
+anchor_bottom = 1.0
+text = "Send"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="SendTextbox" type="LineEdit" parent="Lobby"]
+anchor_left = 0.0927734
+anchor_top = 0.943333
+anchor_right = 0.801758
+anchor_bottom = 1.0
+placeholder_text = "Send a message..."
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Menu" type="LinkButton" parent="."]
+margin_left = 1.18921
+margin_top = 22.5949
+margin_right = 106.189
+margin_bottom = 65.5949
+rect_rotation = -10.4502
+custom_fonts/font = SubResource( 3 )
+text = "Menu"
+underline = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameAlert" type="AcceptDialog" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -224.5
+margin_top = -111.5
+margin_right = 224.5
+margin_bottom = 111.5
+popup_exclusive = true
+window_title = "Game Alert"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="mouse_entered" from="ButtonContainer/Host" to="." method="_on_Host_mouse_entered"]
+[connection signal="mouse_exited" from="ButtonContainer/Host" to="." method="_on_Host_mouse_exited"]
+[connection signal="pressed" from="ButtonContainer/Host" to="." method="_on_Host_pressed"]
+[connection signal="mouse_entered" from="ButtonContainer/Join" to="." method="_on_Join_mouse_entered"]
+[connection signal="mouse_exited" from="ButtonContainer/Join" to="." method="_on_Join_mouse_exited"]
+[connection signal="pressed" from="ButtonContainer/Join" to="." method="_on_Join_pressed"]
+[connection signal="pressed" from="Lobby/SendMessage" to="." method="_on_SendMessage_pressed"]
+[connection signal="text_entered" from="Lobby/SendTextbox" to="." method="_on_SendTextbox_text_entered"]
+[connection signal="pressed" from="Menu" to="." method="_on_Lobby_pressed"]

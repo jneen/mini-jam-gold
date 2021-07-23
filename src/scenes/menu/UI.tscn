@@ -1,0 +1,251 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/scenes/menu/buttongroup.tres" type="ButtonGroup" id=4]
+[ext_resource path="res://assets/icons/16_9.png" type="Texture" id=5]
+[ext_resource path="res://assets/icons/4_3.png" type="Texture" id=6]
+
+[sub_resource type="Theme" id=1]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0, 0, 0, 0.223529 )
+
+[node name="Menu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -2.12378
+margin_top = -0.250854
+margin_right = -2.12378
+margin_bottom = -0.250854
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -166.0
+margin_top = -180.666
+margin_right = 166.0
+margin_bottom = 181.334
+theme = SubResource( 1 )
+custom_styles/bg = SubResource( 2 )
+follow_focus = true
+scroll_vertical_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 160.0
+margin_bottom = 122.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer"]
+margin_right = 160.0
+margin_bottom = 14.0
+text = " Settings"
+
+[node name="MouseSensitivity" type="Label" parent="ScrollContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 160.0
+margin_bottom = 32.0
+rect_pivot_offset = Vector2( -448.848, -38.4044 )
+hint_tooltip = "Mouse Sensitivity is the force applied when the mouse moves to the camera."
+mouse_filter = 1
+text = "Mouse Sensitivity (x0.06)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="slider" type="HSlider" parent="ScrollContainer/VBoxContainer/MouseSensitivity"]
+margin_left = 203.0
+margin_top = -0.793701
+margin_right = 316.0
+margin_bottom = 15.2063
+min_value = 0.06
+max_value = 2.5
+step = 0.03
+value = 0.06
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AntiAliasing" type="Label" parent="ScrollContainer/VBoxContainer"]
+margin_top = 36.0
+margin_right = 160.0
+margin_bottom = 50.0
+hint_tooltip = "Anti-aliasing is a method used in common games.
+Its a graphic procedural method used to remove pixel-ish borders around objects and smoothes them.
+2 gigs of VRAM is recommended to go higher than 4x MSAA."
+mouse_filter = 1
+text = "Anti-aliasing - Disabled"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="slider2" type="HSlider" parent="ScrollContainer/VBoxContainer/AntiAliasing"]
+margin_left = 203.0
+margin_right = 316.0
+margin_bottom = 16.0
+max_value = 4.0
+ticks_on_borders = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VerticalSync" type="Label" parent="ScrollContainer/VBoxContainer"]
+margin_top = 54.0
+margin_right = 160.0
+margin_bottom = 68.0
+hint_tooltip = "VSync is the graphics technology responsible for synchronizing the frame rate of a game to the refresh rate of a monitor.
+This synchronization delivers smooth, uninterrupted gameplay for most of 3D games.
+However, it can cause input lag and delay between inputs while the monitor is refreshing."
+mouse_filter = 1
+text = "Vertical Sync (V-Sync)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="box" type="CheckBox" parent="ScrollContainer/VBoxContainer/VerticalSync"]
+margin_left = 295.336
+margin_top = -5.66968
+margin_right = 319.336
+margin_bottom = 18.3303
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BorderlessFull" type="Label" parent="ScrollContainer/VBoxContainer"]
+margin_top = 72.0
+margin_right = 160.0
+margin_bottom = 86.0
+hint_tooltip = "Borderless windowed mode looks like fullscreen mode, but it's really windowed mode running at full-screen size with no borders.
+It combines the benefit of having your game take up the whole screen with
+the convenience of being able to mouse to another monitor instantly.
+
+However, since it's windowed mode, Windows still runs other processes in the background.
+This can result in performance hits."
+mouse_filter = 1
+text = "Borderless Fullscreen"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="box" type="CheckBox" parent="ScrollContainer/VBoxContainer/BorderlessFull"]
+margin_left = 295.336
+margin_top = -5.66968
+margin_right = 319.336
+margin_bottom = 18.3303
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DisplaySize" type="Label" parent="ScrollContainer/VBoxContainer"]
+margin_top = 90.0
+margin_right = 160.0
+margin_bottom = 104.0
+hint_tooltip = "Size of the window/screen (if the game runs in fullscreen)."
+mouse_filter = 1
+text = "Display Size"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionButton" type="OptionButton" parent="ScrollContainer/VBoxContainer/DisplaySize"]
+margin_left = 161.0
+margin_top = -3.87515
+margin_right = 315.0
+margin_bottom = 16.1248
+group = ExtResource( 4 )
+text = "Native"
+items = [ "Native", null, false, 0, null, "1920×1080", ExtResource( 5 ), false, 1, null, "1600×1280", ExtResource( 5 ), false, 2, null, "1600×1200", ExtResource( 5 ), false, 3, null, "1440×1080", ExtResource( 5 ), false, 4, null, "1440×900", ExtResource( 5 ), false, 5, null, "1280×960", ExtResource( 5 ), false, 6, null, "1366×768", ExtResource( 5 ), false, 7, null, "1280×800", ExtResource( 5 ), false, 8, null, "1280×720", ExtResource( 5 ), false, 9, null, "800×600", ExtResource( 6 ), false, 10, null, "640×480", ExtResource( 6 ), false, 11, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ApplyResButton" type="Button" parent="ScrollContainer/VBoxContainer/DisplaySize"]
+margin_left = 266.119
+margin_top = 18.0595
+margin_right = 314.119
+margin_bottom = 38.0595
+text = "Apply"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Separator" type="Label" parent="ScrollContainer/VBoxContainer"]
+margin_top = 108.0
+margin_right = 160.0
+margin_bottom = 122.0
+
+[node name="MoveForward" type="Label" parent="ScrollContainer/VBoxContainer"]
+visible = false
+margin_top = 126.0
+margin_right = 160.0
+margin_bottom = 140.0
+text = "Move Forward"
+
+[node name="Button" type="Button" parent="ScrollContainer/VBoxContainer/MoveForward"]
+margin_left = 119.0
+margin_top = -4.0
+margin_right = 149.0
+margin_bottom = 16.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MoveBackwards" type="Label" parent="ScrollContainer/VBoxContainer"]
+visible = false
+margin_top = 144.0
+margin_right = 160.0
+margin_bottom = 158.0
+text = "Move Backwards"
+
+[node name="Button" type="Button" parent="ScrollContainer/VBoxContainer/MoveBackwards"]
+margin_left = 119.0
+margin_top = -4.0
+margin_right = 149.0
+margin_bottom = 16.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MoveLeft" type="Label" parent="ScrollContainer/VBoxContainer"]
+visible = false
+margin_top = 162.0
+margin_right = 160.0
+margin_bottom = 176.0
+text = "Move Left"
+
+[node name="Button" type="Button" parent="ScrollContainer/VBoxContainer/MoveLeft"]
+margin_left = 119.0
+margin_top = -4.0
+margin_right = 149.0
+margin_bottom = 16.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MoveRight" type="Label" parent="ScrollContainer/VBoxContainer"]
+visible = false
+margin_top = 180.0
+margin_right = 160.0
+margin_bottom = 194.0
+text = "Move Right"
+
+[node name="Button" type="Button" parent="ScrollContainer/VBoxContainer/MoveRight"]
+margin_left = 119.0
+margin_top = -4.0
+margin_right = 149.0
+margin_bottom = 16.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/MouseSensitivity/slider" to="ScrollContainer/VBoxContainer/MouseSensitivity" method="_on_slider_value_changed"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/AntiAliasing/slider2" to="ScrollContainer/VBoxContainer/AntiAliasing" method="_on_slider2_value_changed"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/VerticalSync/box" to="ScrollContainer/VBoxContainer/VerticalSync" method="_on_box_toggled"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/BorderlessFull/box" to="ScrollContainer/VBoxContainer/BorderlessFull" method="_on_box_toggled"]
+[connection signal="button_down" from="ScrollContainer/VBoxContainer/DisplaySize/ApplyResButton" to="ScrollContainer/VBoxContainer/DisplaySize" method="_on_ApplyResButton_button_down"]

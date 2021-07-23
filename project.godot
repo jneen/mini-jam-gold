@@ -1,0 +1,45 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+[application]
+
+config/name="Mini Jam Project"
+run/main_scene="res://src/scenes/menu/menu.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+GlobalSettings="*res://src/singletons/globalsettings.gd"
+GlobalAchievements="*res://src/singletons/globalachievements.gd"
+Clientserverswitcher="*res://src/server/clientserverswitcher.gd"
+Chat="*res://src/server/chat.gd"
+
+[input]
+
+walk_right={
+"deadzone": 0.5,
+"events": [  ]
+}
+walk_left={
+"deadzone": 0.5,
+"events": [  ]
+}
+jump={
+"deadzone": 0.5,
+"events": [  ]
+}
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"
