@@ -5,10 +5,13 @@ export (int) var run_speed = 1700
 export (int) var carry_speed = 700
 export (int) var walk_jump_speed = -1800
 export (int) var run_jump_speed = -2400
+export (int) var run_jump_threshold = 1500
 export (int) var gravity_float = 4000
 export (int) var gravity_fall = 12000
 export (int) var gravity_fall_cutoff = -500
 export (float, 1.0, 2.0) var jump_boost = 1.2
+
+onready var sprite = $AnimatedSprite
 
 var velocity = Vector2.ZERO
 
@@ -19,6 +22,7 @@ export (float, 0, 1.0) var air_acceleration = 0.05
 
 var coins : int = 0
 var invicible : bool = false
+var frozen : bool = false
 var is_wearing_crown : bool
 var is_carrying : bool = false
 var is_ducking : bool = false
@@ -37,9 +41,18 @@ func damage(value : float):
 		splat()
 
 func splat():
-	print('TODO: splat')
+	frozen = true
+	$RespawnTimer.start()
 
-func get_input():
+	velocity.x = 0.0
+	velocity.y = 0.0
+	facing_dir = 1
+	sprite.flip_h = false
+
+	var treasury = get_tree().get_root().get_node("Game/Room/Map/treasury")
+	self.global_position = treasury.get_global_position()
+
+func process_move():
 # warning-ignore:unused_variable
 	var moving = false
 	var dir = 0
@@ -69,6 +82,8 @@ func pick_friction():
 		return air_friction
 	
 func move_player(dir):
+	if frozen: return
+
 	if dir != 0:
 		velocity.x = lerp(velocity.x, dir * pick_speed(), pick_acceleration())
 	else:
@@ -88,7 +103,9 @@ func pick_speed():
 	return walk_speed
 
 func pick_jump_speed():
-	if Input.is_action_pressed("interact"): return run_jump_speed
+	if is_wearing_crown: return run_jump_speed
+	if Input.is_action_pressed("interact") and abs(velocity.x) > run_jump_threshold:
+		return run_jump_speed
 	return walk_jump_speed
 
 func wear_crown():
@@ -99,14 +116,51 @@ func lose_crown():
 	# TODO: animation + sfx
 	is_wearing_crown = false
 
-func _physics_process(delta):
-	get_input()
-	velocity.y += pick_gravity() * delta
-	velocity = move_and_slide(velocity, Vector2.UP)
+func is_moving_left():
+	if is_wearing_crown: return facing_dir < 0
+	return Input.is_action_pressed("walk_left") and velocity.x < 0
+
+func is_moving_right():
+	if is_wearing_crown: return facing_dir > 0
+	return Input.is_action_pressed("walk_right") and velocity.x > 0
+
+func animate_sprite():
+	if not is_on_floor():
+		sprite.stop()
+		sprite.frame = 3
+		return
+
+	if is_moving_left():
+		sprite.flip_h = true
+		sprite.play("run")
+		return
+
+	if is_moving_right():
+		sprite.flip_h = false
+		sprite.play("run")
+		return
+
+	sprite.stop()
+	sprite.frame = 0
+
+func process_jump():
+	if frozen: return
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor():
 			velocity.y = pick_jump_speed()
 			velocity.x *= jump_boost
+
+
+func _process(delta):
+	animate_sprite()
+
+
+func _physics_process(delta):
+	process_move()
+	velocity.y += pick_gravity() * delta
+	velocity = move_and_slide(velocity, Vector2.UP)
+
+	process_jump()
 
 	# [jneen] TODO: if is_carrying_crown():
 	if Input.is_action_just_pressed("duck"):
@@ -127,4 +181,8 @@ func _physics_process(delta):
 
 func _on_InvicibleTimer_timeout():
 	$InvicibleTimer.stop()
-	invicible = false if invicible else invicible
+	invicible = false
+
+func _on_RespawnTimer_timeout():
+	$RespawnTimer.stop()
+	frozen = false

@@ -27,50 +27,52 @@ cell_custom_transform = Transform2D( 0, 0, 0, 64, 0, 0 )
 format = 1
 
 [node name="treasury" type="Sprite" parent="Room/Map"]
-position = Vector2( 515.353, 2358.35 )
+position = Vector2( -1270.92, 693.597 )
 scale = Vector2( 0.501924, 0.503472 )
 texture = ExtResource( 2 )
 
 [node name="Spikes" parent="Room/Map" instance=ExtResource( 3 )]
-position = Vector2( 1894, 2503 )
+position = Vector2( 59.026, 831.915 )
 
 [node name="Players" type="Node2D" parent="."]
-position = Vector2( 2617.75, 1240 )
 
 [node name="Player" parent="Players" groups=[
 "Player",
 ] instance=ExtResource( 1 )]
-position = Vector2( -389.204, 273.914 )
+position = Vector2( -1286.1, 747.7 )
 
 [node name="Environnment" type="StaticBody2D" parent="."]
-position = Vector2( 1791, 1539.34 )
+position = Vector2( 1781.06, 1539.34 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Environnment"]
-position = Vector2( 420.928, 1113.17 )
+position = Vector2( -1675.17, -556.94 )
 shape = SubResource( 2 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Environnment"]
-position = Vector2( 420.928, -1450.83 )
+position = Vector2( -1770.87, -2520.39 )
 shape = SubResource( 2 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Environnment"]
-position = Vector2( -1708.07, -167.833 )
+position = Vector2( -3399.71, -1594.67 )
 shape = SubResource( 3 )
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="Environnment"]
-position = Vector2( 2549.93, -167.833 )
+position = Vector2( -164.186, -1796.03 )
 shape = SubResource( 3 )
 
 [node name="Cam" type="Camera2D" parent="."]
-position = Vector2( 2211.5, 1371.85 )
 current = true
-zoom = Vector2( 4, 4 )
+zoom = Vector2( 3, 3 )
 
 [node name="CL" type="CanvasLayer" parent="Cam"]
 
 [node name="HUD" parent="Cam/CL" instance=ExtResource( 4 )]
-visible = false
+anchor_left = -0.00144708
+anchor_top = 0.00547658
+anchor_right = 0.998553
+anchor_bottom = 1.00548
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 autoplay = true
+bus = "Music"
