@@ -1,18 +1,21 @@
 extends KinematicBody2D
 
-export (int) var walk_speed = 1000
-export (int) var run_speed = 1600
+export (int) var walk_speed = 900
+export (int) var run_speed = 1700
 export (int) var carry_speed = 700
 export (int) var walk_jump_speed = -1800
 export (int) var run_jump_speed = -2400
-export (int) var gravity_float = 3500
-export (int) var gravity_fall = 5000
-export (float) var jump_boost = 1.2
+export (int) var gravity_float = 4000
+export (int) var gravity_fall = 12000
+export (int) var gravity_fall_cutoff = -500
+export (float, 1.0, 2.0) var jump_boost = 1.2
 
 var velocity = Vector2.ZERO
 
-export (float, 0, 1.0) var friction = 0.1
-export (float, 0, 1.0) var acceleration = 0.25
+export (float, 0, 1.0) var ground_friction = 0.15
+export (float, 0, 1.0) var air_friction = 0.05
+export (float, 0, 1.0) var ground_acceleration = 0.3
+export (float, 0, 1.0) var air_acceleration = 0.05
 
 var coins : int = 0
 var invicible : bool = false
@@ -53,14 +56,27 @@ func get_input():
 	else:
 		move_player(dir)
 
+func pick_acceleration():
+	if is_on_floor():
+		return ground_acceleration
+	else:
+		return air_acceleration
+	
+func pick_friction():
+	if is_on_floor():
+		return ground_friction
+	else:
+		return air_friction
+	
 func move_player(dir):
 	if dir != 0:
-		velocity.x = lerp(velocity.x, dir * pick_speed(), acceleration)
+		velocity.x = lerp(velocity.x, dir * pick_speed(), pick_acceleration())
 	else:
-		velocity.x = lerp(velocity.x, 0, friction)
+		velocity.x = lerp(velocity.x, 0, pick_friction())
+
 
 func pick_gravity():
-	if Input.is_action_pressed("jump") and velocity.y < 0:
+	if Input.is_action_pressed("jump") and velocity.y < gravity_fall_cutoff:
 		return gravity_float
 	else:
 		return gravity_fall
