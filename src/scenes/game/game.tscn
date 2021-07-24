@@ -69,6 +69,7 @@ zoom = Vector2( 4, 4 )
 [node name="CL" type="CanvasLayer" parent="Cam"]
 
 [node name="HUD" parent="Cam/CL" instance=ExtResource( 4 )]
+visible = false
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
