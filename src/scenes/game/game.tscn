@@ -38,7 +38,7 @@ position = Vector2( 2617.75, 1240 )
 [node name="Player" parent="Players" groups=[
 "Player",
 ] instance=ExtResource( 1 )]
-position = Vector2( -389.204, 270.93 )
+position = Vector2( -389.204, 273.914 )
 gravity_fall = 8000
 
 [node name="Environnment" type="StaticBody2D" parent="."]
