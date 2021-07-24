@@ -20,7 +20,9 @@ var is_wearing_crown : bool
 var is_carrying : bool = false
 var is_ducking : bool = false
 var facing_dir : int = 0
+var held_item : String = ""
 
+# warning-ignore:unused_argument
 func damage(value : float):
 	# skip if we're invincible
 	if invicible: return
@@ -35,6 +37,7 @@ func splat():
 	print('TODO: splat')
 
 func get_input():
+# warning-ignore:unused_variable
 	var moving = false
 	var dir = 0
 
@@ -93,8 +96,18 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("duck"):
 		wear_crown()
 
+	# Update any GUI after doing character's work
 	Hud.get_node("UI/Coins/CoinsLabel").text = str(coins)
-	Hud.get_node("UI/Heart/Label").text = str(coins) + "%"
+
+	match held_item:
+		"":
+			Hud.get_node("UI/Powerup/PowerupIcon").texture = null
+		"crown":
+			print("beeboo")
+			Hud.get_node("UI/Powerup/PowerupIcon").texture = preload("res://assets/icons/star.png")
+		"coin":
+			print("beeboo2")
+			Hud.get_node("UI/Powerup/PowerupIcon").texture = preload("res://assets/props/coin.png")
 
 func _on_InvicibleTimer_timeout():
 	$InvicibleTimer.stop()
