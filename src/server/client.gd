@@ -1,6 +1,6 @@
 extends Node
 
-var player_information : Dictionary = {}
+var player_information : Dictionary = {"name" : "Test?"}
 var players : Dictionary = {}
 var selfPlayerNode
 

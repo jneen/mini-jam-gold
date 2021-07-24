@@ -71,6 +71,7 @@ margin_top = 127.0
 margin_right = 92.0
 margin_bottom = 141.0
 focus_mode = 2
+disabled = true
 text = "Multiplayer"
 underline = 1
 

@@ -5,7 +5,7 @@ onready var AchievementsPanel = $Achievements
 onready var CreditsPanel = $CreditsPanel
 
 func _on_Singleplayer_pressed():
-	pass
+	get_tree().change_scene_to(preload("res://src/scenes/menu/loadinglevel.tscn"))
 
 func _on_Multiplayer_pressed():
 # warning-ignore:return_value_discarded
