@@ -3,7 +3,8 @@ extends KinematicBody2D
 export (int) var walk_speed = 1000
 export (int) var run_speed = 1600
 export (int) var carry_speed = 700
-export (int) var jump_speed = -1800
+export (int) var walk_jump_speed = -1800
+export (int) var run_jump_speed = -2400
 export (int) var gravity_float = 3500
 export (int) var gravity_fall = 5000
 export (float) var jump_boost = 1.2
@@ -67,6 +68,10 @@ func pick_speed():
 	if is_carrying: return carry_speed
 	return walk_speed
 
+func pick_jump_speed():
+	if Input.is_action_pressed("interact"): return run_jump_speed
+	return walk_jump_speed
+
 func wear_crown():
 	# TODO: animation + sfx
 	is_wearing_crown = true
@@ -81,7 +86,7 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity, Vector2.UP)
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor():
-			velocity.y = jump_speed
+			velocity.y = pick_jump_speed()
 			velocity.x *= jump_boost
 
 	# [jneen] TODO: if is_carrying_crown():
