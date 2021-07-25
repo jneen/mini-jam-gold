@@ -136,14 +136,20 @@ func is_moving_right():
 	return Input.is_action_pressed("walk_right") and velocity.x > 0
 
 func play_move_sprite():
-	print('play_move_sprite')
-	print('ducking: ', ducking)
-
 	if frozen: return sprite.play("idle")
-	if ducking: return sprite.play("crawl")
+
+	var is_moving = Input.is_action_pressed("walk_left") or Input.is_action_pressed("walk_right")
+
+	if ducking:
+		sprite.play("crawl")
+		if not is_moving: sprite.stop()
+		return
+
 	if Input.is_action_pressed("walk_left") or Input.is_action_pressed("walk_right"):
-		return sprite.play("run")
-	return sprite.play("idle")
+		sprite.play("run")
+		return
+
+	sprite.play("idle")
 
 func animate_sprite():
 	if is_moving_left():
