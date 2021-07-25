@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/squished.mp3-0607f11cb28602c9ddd6e23769f74acd.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/squished.mp3"
+dest_files=[ "res://.import/squished.mp3-0607f11cb28602c9ddd6e23769f74acd.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
