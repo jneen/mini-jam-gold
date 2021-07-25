@@ -21,6 +21,7 @@ GlobalAchievements="*res://src/singletons/globalachievements.gd"
 Clientserverswitcher="*res://src/server/clientserverswitcher.gd"
 Chat="*res://src/server/chat.gd"
 Hud="*res://src/scenes/game/HUD.tscn"
+Levels="*res://src/scenes/game/levels.gd"
 
 [display]
 
