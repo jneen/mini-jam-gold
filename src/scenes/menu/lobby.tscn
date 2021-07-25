@@ -10,57 +10,57 @@
 [ext_resource path="res://assets/font/fpbold.tres" type="DynamicFont" id=8]
 [ext_resource path="res://assets/styles/host_03.png" type="Texture" id=9]
 
-[sub_resource type="StyleBoxTexture" id=8]
+[sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 9 )
 region_rect = Rect2( 0, 0, 487, 273 )
 modulate_color = Color( 0.721569, 0.960784, 1, 1 )
 
-[sub_resource type="StyleBoxTexture" id=9]
+[sub_resource type="StyleBoxTexture" id=2]
 texture = ExtResource( 9 )
 region_rect = Rect2( 0, 0, 487, 273 )
 modulate_color = Color( 0.4, 0.392157, 0.392157, 1 )
 
-[sub_resource type="StyleBoxTexture" id=10]
+[sub_resource type="StyleBoxTexture" id=3]
 texture = ExtResource( 9 )
 region_rect = Rect2( 0, 0, 487, 273 )
 
-[sub_resource type="StyleBoxTexture" id=11]
+[sub_resource type="StyleBoxTexture" id=4]
 texture = ExtResource( 9 )
 region_rect = Rect2( 0, 0, 487, 273 )
 modulate_color = Color( 0.505882, 0.505882, 0.505882, 1 )
 
-[sub_resource type="StyleBoxTexture" id=12]
+[sub_resource type="StyleBoxTexture" id=5]
 texture = ExtResource( 9 )
 region_rect = Rect2( 0, 0, 487, 273 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=6]
 size = 48
 font_data = ExtResource( 3 )
-
-[sub_resource type="StyleBoxTexture" id=4]
-texture = ExtResource( 2 )
-region_rect = Rect2( 0, 0, 487, 273 )
-modulate_color = Color( 0.721569, 0.960784, 1, 1 )
-
-[sub_resource type="StyleBoxTexture" id=5]
-texture = ExtResource( 2 )
-region_rect = Rect2( 0, 0, 487, 273 )
-modulate_color = Color( 0.4, 0.392157, 0.392157, 1 )
-
-[sub_resource type="StyleBoxTexture" id=6]
-texture = ExtResource( 2 )
-region_rect = Rect2( 0, 0, 487, 273 )
 
 [sub_resource type="StyleBoxTexture" id=7]
 texture = ExtResource( 2 )
 region_rect = Rect2( 0, 0, 487, 273 )
-modulate_color = Color( 0.505882, 0.505882, 0.505882, 1 )
+modulate_color = Color( 0.721569, 0.960784, 1, 1 )
 
-[sub_resource type="StyleBoxTexture" id=1]
+[sub_resource type="StyleBoxTexture" id=8]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 487, 273 )
+modulate_color = Color( 0.4, 0.392157, 0.392157, 1 )
+
+[sub_resource type="StyleBoxTexture" id=9]
 texture = ExtResource( 2 )
 region_rect = Rect2( 0, 0, 487, 273 )
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="StyleBoxTexture" id=10]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 487, 273 )
+modulate_color = Color( 0.505882, 0.505882, 0.505882, 1 )
+
+[sub_resource type="StyleBoxTexture" id=11]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 487, 273 )
+
+[sub_resource type="Animation" id=12]
 resource_name = "rotate"
 loop = true
 tracks/0/type = "value"
@@ -76,16 +76,16 @@ tracks/0/keys = {
 "values": [ 0.0, 360.0 ]
 }
 
-[sub_resource type="Theme" id=14]
+[sub_resource type="Theme" id=13]
 
-[sub_resource type="StyleBoxFlat" id=15]
+[sub_resource type="StyleBoxFlat" id=14]
 bg_color = Color( 0.12549, 0.12549, 0.12549, 0.52549 )
 corner_radius_top_left = 24
 corner_radius_top_right = 24
 corner_radius_bottom_right = 24
 corner_radius_bottom_left = 24
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=15]
 size = 42
 font_data = ExtResource( 3 )
 
@@ -126,12 +126,12 @@ anchor_top = -0.25
 anchor_right = 0.495277
 anchor_bottom = 1.25
 mouse_default_cursor_shape = 2
-custom_styles/hover = SubResource( 8 )
-custom_styles/pressed = SubResource( 9 )
-custom_styles/focus = SubResource( 10 )
-custom_styles/disabled = SubResource( 11 )
-custom_styles/normal = SubResource( 12 )
-custom_fonts/font = SubResource( 2 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -142,12 +142,12 @@ anchor_top = -0.25
 anchor_right = 0.731405
 anchor_bottom = 1.25
 mouse_default_cursor_shape = 2
-custom_styles/hover = SubResource( 4 )
-custom_styles/pressed = SubResource( 5 )
-custom_styles/focus = SubResource( 6 )
-custom_styles/disabled = SubResource( 7 )
-custom_styles/normal = SubResource( 1 )
-custom_fonts/font = SubResource( 2 )
+custom_styles/hover = SubResource( 7 )
+custom_styles/pressed = SubResource( 8 )
+custom_styles/focus = SubResource( 9 )
+custom_styles/disabled = SubResource( 10 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -226,7 +226,7 @@ __meta__ = {
 }
 
 [node name="AP" type="AnimationPlayer" parent="LoadingInfo"]
-anims/rotate = SubResource( 13 )
+anims/rotate = SubResource( 12 )
 
 [node name="Panel" type="Panel" parent="LoadingInfo"]
 anchor_left = 0.5
@@ -237,8 +237,8 @@ margin_left = -78.0
 margin_top = -48.0
 margin_right = 78.0
 margin_bottom = 47.0
-theme = SubResource( 14 )
-custom_styles/panel = SubResource( 15 )
+theme = SubResource( 13 )
+custom_styles/panel = SubResource( 14 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -317,7 +317,7 @@ margin_top = 22.5949
 margin_right = 106.189
 margin_bottom = 65.5949
 rect_rotation = -10.4502
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 15 )
 text = "Menu"
 underline = 1
 __meta__ = {

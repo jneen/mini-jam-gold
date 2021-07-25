@@ -17,8 +17,9 @@ var velocity = Vector2.ZERO
 
 export (float, 0, 1.0) var ground_friction = 0.15
 export (float, 0, 1.0) var air_friction = 0.05
-export (float, 0, 1.0) var ground_acceleration = 0.3
+export (float, 0, 1.0) var ground_acceleration = 0.2
 export (float, 0, 1.0) var air_acceleration = 0.05
+export (float, 0, 1.0) var collision_momentum_dropoff = 0.3
 
 var coins : int = 0
 var invicible : bool = false
@@ -28,6 +29,7 @@ var is_carrying : bool = false
 var is_ducking : bool = false
 var facing_dir : int = 0
 var held_item : String = ""
+var buffer_jump : bool = false
 
 # warning-ignore:unused_argument
 func damage(value : float):
@@ -102,6 +104,9 @@ func pick_speed():
 	if is_carrying: return carry_speed
 	return walk_speed
 
+func is_carrying():
+	return held_item != ""
+
 func pick_jump_speed():
 	if is_wearing_crown: return run_jump_speed
 	if Input.is_action_pressed("interact") and abs(velocity.x) > run_jump_threshold:
@@ -143,12 +148,23 @@ func animate_sprite():
 	sprite.stop()
 	sprite.frame = 0
 
+func jump():
+	velocity.y = pick_jump_speed()
+	velocity.x *= jump_boost
+
 func process_jump():
 	if frozen: return
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor():
-			velocity.y = pick_jump_speed()
-			velocity.x *= jump_boost
+			jump()
+		else:
+			$BufferJumpTimer.start()
+			buffer_jump = true
+	else:
+		if buffer_jump and is_on_floor():
+			$BufferJumpTimer.stop()
+			buffer_jump = false
+			jump()
 
 
 func _process(delta):
@@ -158,7 +174,8 @@ func _process(delta):
 func _physics_process(delta):
 	process_move()
 	velocity.y += pick_gravity() * delta
-	velocity = move_and_slide(velocity, Vector2.UP)
+	var collided_velocity = move_and_slide(velocity, Vector2.UP)
+	velocity = lerp(velocity, collided_velocity, collision_momentum_dropoff)
 
 	process_jump()
 
@@ -186,3 +203,8 @@ func _on_InvicibleTimer_timeout():
 func _on_RespawnTimer_timeout():
 	$RespawnTimer.stop()
 	frozen = false
+
+func _on_BufferJumpTimer_timeout():
+	print('buffer jump timeout!')
+	buffer_jump = false
+	$BufferJumpTimer.stop()

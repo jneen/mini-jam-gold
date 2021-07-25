@@ -4,41 +4,41 @@
 [ext_resource path="res://assets/sprites/run.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 64, 128 )
+extents = Vector2( 59.9641, 112.434 )
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=9]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 0, 0, 1134, 1795 )
+region = Rect2( 0, 0, 171, 273 )
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=10]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 1134, 0, 1134, 1795 )
+region = Rect2( 171, 0, 171, 273 )
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id=11]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 2268, 0, 1134, 1795 )
+region = Rect2( 342, 0, 171, 273 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=12]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 3402, 0, 1134, 1795 )
+region = Rect2( 513, 0, 171, 273 )
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id=13]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 4536, 0, 1134, 1795 )
+region = Rect2( 684, 0, 171, 273 )
 
-[sub_resource type="AtlasTexture" id=7]
+[sub_resource type="AtlasTexture" id=14]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 5670, 0, 1134, 1795 )
+region = Rect2( 855, 0, 171, 273 )
 
 [sub_resource type="SpriteFrames" id=8]
 animations = [ {
-"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ) ],
 "loop": true,
 "name": "run",
 "speed": 10.0
@@ -48,19 +48,23 @@ animations = [ {
 script = ExtResource( 1 )
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 16 )
 shape = SubResource( 1 )
 
 [node name="RespawnTimer" type="Timer" parent="."]
 wait_time = 3.0
 
+[node name="BufferJumpTimer" type="Timer" parent="."]
+wait_time = 0.15
+
 [node name="InvicibleTimer" type="Timer" parent="."]
 wait_time = 2.0
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( -1.85497, -9.81252 )
-scale = Vector2( 0.150191, 0.150191 )
+position = Vector2( -0.741341, -2.93409 )
 frames = SubResource( 8 )
 animation = "run"
 
 [connection signal="timeout" from="RespawnTimer" to="." method="_on_RespawnTimer_timeout"]
+[connection signal="timeout" from="BufferJumpTimer" to="." method="_on_BufferJumpTimer_timeout"]
 [connection signal="timeout" from="InvicibleTimer" to="." method="_on_InvicibleTimer_timeout"]
