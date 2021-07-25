@@ -61,6 +61,9 @@ wait_time = 3.0
 [node name="BufferJumpTimer" type="Timer" parent="."]
 wait_time = 0.15
 
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.1
+
 [node name="InvicibleTimer" type="Timer" parent="."]
 wait_time = 2.0
 
@@ -93,4 +96,5 @@ bus = "Sound"
 
 [connection signal="timeout" from="RespawnTimer" to="." method="_on_RespawnTimer_timeout"]
 [connection signal="timeout" from="BufferJumpTimer" to="." method="_on_BufferJumpTimer_timeout"]
+[connection signal="timeout" from="CoyoteTimer" to="." method="_on_CoyoteTimer_timeout"]
 [connection signal="timeout" from="InvicibleTimer" to="." method="_on_InvicibleTimer_timeout"]

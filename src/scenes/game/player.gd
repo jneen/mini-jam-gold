@@ -31,6 +31,7 @@ var facing_dir : int = 0
 var held_item : String = ""
 var buffer_jump : bool = false
 var bonk : bool = false
+var can_jump : bool = false
 
 # warning-ignore:unused_argument
 func damage(value : float):
@@ -160,13 +161,19 @@ func jump():
 
 func process_jump():
 	if frozen: return
+	if is_on_floor():
+		can_jump = true
+		$CoyoteTimer.start()
+
 	if Input.is_action_just_pressed("jump"):
-		if is_on_floor():
+		if can_jump:
 			jump()
 		else:
 			$BufferJumpTimer.start()
 			buffer_jump = true
 	else:
+		# note: no coyote jumps here. you have to actually be on the floor
+		# to buffer jump
 		if buffer_jump and is_on_floor():
 			$BufferJumpTimer.stop()
 			buffer_jump = false
@@ -232,6 +239,9 @@ func _on_RespawnTimer_timeout():
 	frozen = false
 
 func _on_BufferJumpTimer_timeout():
-	print('buffer jump timeout!')
-	buffer_jump = false
 	$BufferJumpTimer.stop()
+	buffer_jump = false
+
+func _on_CoyoteTimer_timeout():
+	$CoyoteTimer.stop()
+	if not is_on_floor(): can_jump = false
