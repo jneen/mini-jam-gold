@@ -20,6 +20,8 @@ export (float, 0, 1.0) var air_friction = 0.05
 export (float, 0, 1.0) var ground_acceleration = 0.1
 export (float, 0, 1.0) var air_acceleration = 0.1
 export (float, 0, 1.0) var collision_momentum_dropoff = 0.1
+export (Vector2) var carry_offset = Vector2(64, -32)
+export (Vector2) var throw_force = Vector2(200, -1000)
 
 var coins : int = 0
 var invicible : bool = false
@@ -27,12 +29,12 @@ var frozen : bool = false
 var is_wearing_crown : bool
 var is_ducking : bool = false
 var facing_dir : int = 0
-var held_item : String = ""
+var held_item
+var held_item_original_parent
 var buffer_jump : bool = false
 var bonk : bool = false
 var can_jump : bool = false
 var ducking : bool = false
-var coin_in
 
 # warning-ignore:unused_argument
 func damage(value : float):
@@ -47,6 +49,9 @@ func damage(value : float):
 		splat()
 
 func splat():
+	if held_item:
+		drop_item()
+
 	$SplatSFX.play()
 	frozen = true
 	$RespawnTimer.start()
@@ -56,7 +61,7 @@ func splat():
 	facing_dir = 1
 	sprite.flip_h = false
 
-	var treasury = get_tree().get_root().get_node("Game/Room/Map/treasury")
+	var treasury = get_tree().get_root().get_node("Game/World/Entities/treasury")
 	self.global_position = treasury.get_global_position()
 
 func process_move():
@@ -105,14 +110,22 @@ func pick_gravity():
 	else:
 		return gravity_fall
 
+func carry(object):
+	held_item = object
+	held_item_original_parent = object.get_parent()
+	object.held = true
+	held_item_original_parent.remove_child(object)
+	add_child(object)
+	object.get_collision().disabled = true
+
 func pick_speed():
 	if is_wearing_crown: return run_speed
-	if Input.is_action_pressed("interact"): return run_speed
 	if is_carrying(): return carry_speed
+	if Input.is_action_pressed("interact"): return run_speed
 	return walk_speed
 
 func is_carrying():
-	return held_item != ""
+	return held_item != null
 
 func pick_jump_speed():
 	if is_wearing_crown: return run_jump_speed
@@ -221,11 +234,31 @@ func process_bonk(slide : Vector2):
 
 	velocity.y = lerp(velocity.y, slide.y, collision_momentum_dropoff / 2)
 
+func direct_vector(v : Vector2):
+	return Vector2(facing_dir, 1) * v
+
+func drop_item():
+	held_item.sleeping = false
+	held_item.held = false
+	remove_child(held_item)
+	held_item_original_parent.add_child(held_item)
+	held_item.get_collision().disabled = false
+	self.held_item = null
+
 func _physics_process(delta):
+	if held_item:
+		if Input.is_action_pressed("interact"):
+			held_item.global_position = self.global_position + direct_vector(carry_offset)
+		else:
+			var item = held_item
+			drop_item()
+			item.set_axis_velocity(direct_vector(throw_force))
+
+
 	animate_sprite()
 	process_move()
 	velocity.y += pick_gravity() * delta
-	var slide = move_and_slide(velocity, Vector2.UP)
+	var slide = move_and_slide(velocity, Vector2.UP, false, 4, PI/4, false)
 	velocity.x = lerp(velocity.x, slide.x, collision_momentum_dropoff)
 
 	process_bonk(slide)
@@ -238,17 +271,6 @@ func _physics_process(delta):
 	# [jneen] TODO: if is_carrying_crown():
 	if Input.is_action_just_pressed("duck") and not is_carrying():
 		duck()
-
-	# Update any GUI after doing character's work
-#	Hud.get_node("UI/Coins/CoinsLabel").text = str(coins)
-#
-#	match held_item:
-#		"":
-#			Hud.get_node("UI/Powerup/PowerupIcon").texture = null
-#		"crown":
-#			Hud.get_node("UI/Powerup/PowerupIcon").texture = preload("res://assets/icons/star.png")
-#		"coin":
-#			Hud.get_node("UI/Powerup/PowerupIcon").texture = preload("res://assets/props/coin.png")
 
 func _on_InvicibleTimer_timeout():
 	$InvicibleTimer.stop()
