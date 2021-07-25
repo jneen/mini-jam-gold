@@ -1,18 +1,16 @@
 extends Sprite
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 func retrieve_save_flags():
 	return null
+
+func _on_Area2D_body_entered(body):
+	if body.is_in_group("Player"):
+		if $"../../../World/Entities/Coin".held:
+			print("yea")
+			$"../../../Players/Player".coins += 1
+			$"../../../World/Entities/Coin".held = false
+			$"../../../World/Entities/Coin".show()
+			$"../../../Players/Player".held_item = null
+		else:
+			print("   " + str($"../../../World/Entities/Coin".held))
+			

@@ -111,12 +111,11 @@ func pick_gravity():
 		return gravity_fall
 
 func carry(object):
+	print(object)
 	held_item = object
 	held_item_original_parent = object.get_parent()
-	object.held = true
-	held_item_original_parent.remove_child(object)
-	add_child(object)
-	object.get_collision().disabled = true
+	#object.held = true
+	object.hide()
 
 func pick_speed():
 	if is_wearing_crown: return run_speed

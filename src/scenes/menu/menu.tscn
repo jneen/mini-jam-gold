@@ -254,7 +254,8 @@ text = "Master Volume (100%)"
 margin_top = 36.0
 margin_right = 330.0
 margin_bottom = 52.0
-value = 100.0
+max_value = 10.0
+value = 10.0
 
 [node name="MusicAudio" type="Label" parent="OptionsPanel/Audio Settings"]
 margin_top = 56.0
@@ -266,7 +267,8 @@ text = "Music Volume (100%)"
 margin_top = 74.0
 margin_right = 330.0
 margin_bottom = 90.0
-value = 100.0
+max_value = 10.0
+value = 10.0
 
 [node name="SoundAudio" type="Label" parent="OptionsPanel/Audio Settings"]
 margin_top = 94.0
@@ -278,7 +280,8 @@ text = "Sound Volume (100%)"
 margin_top = 112.0
 margin_right = 330.0
 margin_bottom = 128.0
-value = 100.0
+max_value = 10.0
+value = 10.0
 
 [node name="Exit" type="LinkButton" parent="OptionsPanel"]
 anchor_left = 1.0

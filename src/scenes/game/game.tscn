@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://src/scenes/game/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/props/treasury.png" type="Texture" id=2]
@@ -13,6 +13,8 @@
 [ext_resource path="res://src/scenes/game/treasury.gd" type="Script" id=11]
 [ext_resource path="res://src/scenes/game/Debuglevel.gd" type="Script" id=12]
 [ext_resource path="res://src/scenes/game/Coin.tscn" type="PackedScene" id=13]
+[ext_resource path="res://assets/font/FreePixel.ttf" type="DynamicFontData" id=14]
+[ext_resource path="res://src/scenes/game/scorelbale.gd" type="Script" id=15]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 16, 4, 8, 8, 4, 16, 0, 112, 0, 120, 4, 124, 8, 128, 16, 128, 112, 124, 120, 120, 124, 112, 128, 16, 128, 8, 124, 4, 120, 0, 112 )
@@ -376,11 +378,18 @@ points = PoolVector2Array( 128, 128, 0, 128, 0, 0, 128, 0 )
 } ]
 14/z_index = 0
 
+[sub_resource type="RectangleShape2D" id=19]
+extents = Vector2( 640, 397.856 )
+
 [sub_resource type="RectangleShape2D" id=17]
 extents = Vector2( 2050, 78.9944 )
 
 [sub_resource type="RectangleShape2D" id=18]
 extents = Vector2( 78.994, 1202 )
+
+[sub_resource type="DynamicFont" id=20]
+size = 36
+font_data = ExtResource( 14 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 10 )
@@ -417,6 +426,11 @@ position = Vector2( -1270.92, 693.597 )
 scale = Vector2( 0.501924, 0.503472 )
 texture = ExtResource( 2 )
 script = ExtResource( 11 )
+
+[node name="Area2D" type="Area2D" parent="World/Entities/treasury"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Entities/treasury/Area2D"]
+shape = SubResource( 19 )
 
 [node name="Spikes" parent="World/Entities" instance=ExtResource( 3 )]
 position = Vector2( 59.026, 831.915 )
@@ -457,10 +471,56 @@ anchor_top = -2.71302
 anchor_right = -1.79142
 anchor_bottom = -1.71302
 
+[node name="Label" type="Label" parent="Cam/CL"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -321.0
+margin_right = 321.0
+margin_bottom = 477.0
+custom_fonts/font = SubResource( 20 )
+text = "60"
+align = 1
+script = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="Cam/CL/Label"]
+one_shot = true
+autostart = true
+
+[node name="ColorRect" type="ColorRect" parent="Cam/CL"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.313726 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="Cam/CL/ColorRect"]
+anchor_top = 0.271548
+anchor_right = 1.0
+anchor_bottom = 0.783215
+custom_fonts/font = SubResource( 20 )
+text = "SCORE: X
+Share your score in the comments !
+
+Thanks for playing, we took a lot of time making it but due to developing issues (a lot) we didn't come up with the expected result so this will come maybe with other updates."
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
 [node name="Background Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
+volume_db = -25.0
 autoplay = true
 bus = "Music"
 
 [node name="Debuglevel" type="Node2D" parent="."]
 script = ExtResource( 12 )
+
+[connection signal="body_entered" from="World/Entities/treasury/Area2D" to="World/Entities/treasury" method="_on_Area2D_body_entered"]
+[connection signal="timeout" from="Cam/CL/Label/Timer" to="Cam/CL/Label" method="_on_Timer_timeout"]
