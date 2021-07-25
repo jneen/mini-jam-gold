@@ -5,7 +5,7 @@ export (int) var run_speed = 1700
 export (int) var carry_speed = 700
 export (int) var walk_jump_speed = -1800
 export (int) var run_jump_speed = -2400
-export (int) var run_jump_threshold = 1500
+export (int) var run_jump_threshold = 1000
 export (int) var gravity_float = 4000
 export (int) var gravity_fall = 12000
 export (int) var gravity_fall_cutoff = -500
@@ -15,11 +15,11 @@ onready var sprite = $AnimatedSprite
 
 var velocity = Vector2.ZERO
 
-export (float, 0, 1.0) var ground_friction = 0.15
+export (float, 0, 1.0) var ground_friction = 0.2
 export (float, 0, 1.0) var air_friction = 0.05
-export (float, 0, 1.0) var ground_acceleration = 0.2
-export (float, 0, 1.0) var air_acceleration = 0.05
-export (float, 0, 1.0) var collision_momentum_dropoff = 0.3
+export (float, 0, 1.0) var ground_acceleration = 0.1
+export (float, 0, 1.0) var air_acceleration = 0.1
+export (float, 0, 1.0) var collision_momentum_dropoff = 0.1
 
 var coins : int = 0
 var invicible : bool = false
@@ -30,6 +30,7 @@ var is_ducking : bool = false
 var facing_dir : int = 0
 var held_item : String = ""
 var buffer_jump : bool = false
+var bonk : bool = false
 
 # warning-ignore:unused_argument
 func damage(value : float):
@@ -90,6 +91,8 @@ func move_player(dir):
 		velocity.x = lerp(velocity.x, dir * pick_speed(), pick_acceleration())
 	else:
 		velocity.x = lerp(velocity.x, 0, pick_friction())
+
+	if abs(velocity.x) < 10: velocity.x = 0
 
 
 func pick_gravity():
@@ -170,12 +173,33 @@ func process_jump():
 func _process(delta):
 	animate_sprite()
 
+func process_bonk(slide : Vector2):
+	# if we're not trying to go up, there is no more bonk, and we should
+	# not remember y-momentum
+	if velocity.y >= 0:
+		bonk = false
+		velocity.y = slide.y
+		return
+
+	# so we know we tried to move up.
+
+	# if the collided y-vel was zeroed out, we have head-bonked.
+	if slide.y == 0:
+		bonk = true
+
+	# if we have head-bonked we should float a bit, but never actually go up
+	if velocity.y < 0 and slide.y < 0 and bonk:
+		velocity.y = 0
+
+	velocity.y = lerp(velocity.y, slide.y, collision_momentum_dropoff / 2)
 
 func _physics_process(delta):
 	process_move()
 	velocity.y += pick_gravity() * delta
-	var collided_velocity = move_and_slide(velocity, Vector2.UP)
-	velocity = lerp(velocity, collided_velocity, collision_momentum_dropoff)
+	var slide = move_and_slide(velocity, Vector2.UP)
+	velocity.x = lerp(velocity.x, slide.x, collision_momentum_dropoff)
+
+	process_bonk(slide)
 
 	process_jump()
 
