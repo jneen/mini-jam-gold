@@ -39,11 +39,13 @@ func damage(value : float):
 
 	if is_wearing_crown:
 		lose_crown()
+		$DamageSFX.play()
 		$InvicibleTimer.start()
 	else:
 		splat()
 
 func splat():
+	$SplatSFX.play()
 	frozen = true
 	$RespawnTimer.start()
 
@@ -152,6 +154,7 @@ func animate_sprite():
 	sprite.frame = 0
 
 func jump():
+	$JumpSFX.play()
 	velocity.y = pick_jump_speed()
 	velocity.x *= jump_boost
 

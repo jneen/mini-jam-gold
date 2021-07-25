@@ -1,7 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/scenes/game/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/run.png" type="Texture" id=2]
+[ext_resource path="res://assets/sounds/squished.mp3" type="AudioStream" id=3]
+[ext_resource path="res://assets/sounds/jump2.mp3" type="AudioStream" id=4]
+[ext_resource path="res://assets/sounds/land.mp3" type="AudioStream" id=5]
+[ext_resource path="res://assets/sounds/au.mp3" type="AudioStream" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 59.9641, 112.434 )
@@ -64,6 +68,28 @@ wait_time = 2.0
 position = Vector2( -0.741341, -2.93409 )
 frames = SubResource( 8 )
 animation = "run"
+
+[node name="JumpSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+bus = "Sound"
+
+[node name="LandSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+bus = "Sound"
+
+[node name="SplatSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+bus = "Sound"
+
+[node name="WearSFX" type="AudioStreamPlayer2D" parent="."]
+bus = "Sound"
+
+[node name="StepSFX" type="AudioStreamPlayer2D" parent="."]
+bus = "Sound"
+
+[node name="DamageSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+bus = "Sound"
 
 [connection signal="timeout" from="RespawnTimer" to="." method="_on_RespawnTimer_timeout"]
 [connection signal="timeout" from="BufferJumpTimer" to="." method="_on_BufferJumpTimer_timeout"]
