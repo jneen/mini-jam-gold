@@ -32,6 +32,7 @@ var buffer_jump : bool = false
 var bonk : bool = false
 var can_jump : bool = false
 var ducking : bool = false
+var coin_in
 
 # warning-ignore:unused_argument
 func damage(value : float):
@@ -192,6 +193,7 @@ func duck():
 	print('duck')
 	ducking = true
 	$PlayerCollision.get_shape().set_extents(Vector2(120, 60))
+# warning-ignore:return_value_discarded
 	move_and_collide(64 * Vector2.DOWN)
 
 func unduck():
@@ -238,17 +240,15 @@ func _physics_process(delta):
 		duck()
 
 	# Update any GUI after doing character's work
-	Hud.get_node("UI/Coins/CoinsLabel").text = str(coins)
-
-	match held_item:
-		"":
-			Hud.get_node("UI/Powerup/PowerupIcon").texture = null
-		"crown":
-			print("beeboo")
-			Hud.get_node("UI/Powerup/PowerupIcon").texture = preload("res://assets/icons/star.png")
-		"coin":
-			print("beeboo2")
-			Hud.get_node("UI/Powerup/PowerupIcon").texture = preload("res://assets/props/coin.png")
+#	Hud.get_node("UI/Coins/CoinsLabel").text = str(coins)
+#
+#	match held_item:
+#		"":
+#			Hud.get_node("UI/Powerup/PowerupIcon").texture = null
+#		"crown":
+#			Hud.get_node("UI/Powerup/PowerupIcon").texture = preload("res://assets/icons/star.png")
+#		"coin":
+#			Hud.get_node("UI/Powerup/PowerupIcon").texture = preload("res://assets/props/coin.png")
 
 func _on_InvicibleTimer_timeout():
 	$InvicibleTimer.stop()
