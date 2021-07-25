@@ -21,7 +21,7 @@ export (float, 0, 1.0) var ground_acceleration = 0.1
 export (float, 0, 1.0) var air_acceleration = 0.1
 export (float, 0, 1.0) var collision_momentum_dropoff = 0.1
 export (Vector2) var carry_offset = Vector2(64, -32)
-export (Vector2) var throw_force = Vector2(200, -1000)
+export (Vector2) var throw_force = Vector2(1700, -700)
 
 var coins : int = 0
 var invicible : bool = false
@@ -114,8 +114,10 @@ func carry(object):
 	print(object)
 	held_item = object
 	held_item_original_parent = object.get_parent()
-	#object.held = true
-	object.hide()
+	held_item_original_parent.remove_child(object)
+	add_child(object)
+	object.position = carry_offset
+	object.disable_physics()
 
 func pick_speed():
 	if is_wearing_crown: return run_speed
@@ -170,6 +172,14 @@ func animate_sprite():
 
 	if is_moving_right():
 		sprite.flip_h = false
+
+	if held_item:
+		var dir = 1
+		if sprite.flip_h: dir = -1
+		if sign(held_item.position.x) != sign(facing_dir):
+			held_item.position.x *= -1
+
+
 
 	play_move_sprite()
 
@@ -237,18 +247,19 @@ func direct_vector(v : Vector2):
 	return Vector2(facing_dir, 1) * v
 
 func drop_item():
+	var current_position = held_item.global_position
 	held_item.sleeping = false
-	held_item.held = false
+
 	remove_child(held_item)
 	held_item_original_parent.add_child(held_item)
-	held_item.get_collision().disabled = false
+	held_item.global_position = current_position
+
+	held_item.enable_physics()
 	self.held_item = null
 
 func _physics_process(delta):
 	if held_item:
-		if Input.is_action_pressed("interact"):
-			held_item.global_position = self.global_position + direct_vector(carry_offset)
-		else:
+		if not Input.is_action_pressed("interact"):
 			var item = held_item
 			drop_item()
 			item.set_axis_velocity(direct_vector(throw_force))

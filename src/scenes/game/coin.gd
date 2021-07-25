@@ -1,12 +1,20 @@
 extends RigidBody2D
 
 var held : bool = false
+var original_gravity_scale = 0
 
 func _on_Coininteractzone_body_entered(body):
-	if body.is_in_group("Player"):
-		print("CARRIED RN")
-		held = true
-		hide()
+	if not $GrabCooldownTimer.is_stopped(): return
+	if body.is_in_group("Player") and Input.is_action_pressed('interact'):
+		body.carry(self)
 
-func get_collision():
-	return $CollisionShape2D
+func disable_physics():
+	print('disable_physics')
+	$CollisionShape2D.set_deferred('disabled', true)
+	original_gravity_scale = self.gravity_scale
+	self.gravity_scale = 0
+
+func enable_physics():
+	print('enable_physics')
+	$CollisionShape2D.set_deferred('disabled', false)
+	self.gravity_scale = original_gravity_scale
