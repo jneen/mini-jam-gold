@@ -5,7 +5,7 @@ export (int) var run_speed = 1700
 export (int) var carry_speed = 700
 export (int) var walk_jump_speed = -1800
 export (int) var run_jump_speed = -2400
-export (int) var run_jump_threshold = 1000
+export (int) var run_jump_threshold = 800
 export (int) var gravity_float = 4000
 export (int) var gravity_fall = 12000
 export (int) var gravity_fall_cutoff = -500
@@ -25,13 +25,13 @@ var coins : int = 0
 var invicible : bool = false
 var frozen : bool = false
 var is_wearing_crown : bool
-var is_carrying : bool = false
 var is_ducking : bool = false
 var facing_dir : int = 0
 var held_item : String = ""
 var buffer_jump : bool = false
 var bonk : bool = false
 var can_jump : bool = false
+var ducking : bool = false
 
 # warning-ignore:unused_argument
 func damage(value : float):
@@ -107,7 +107,7 @@ func pick_gravity():
 func pick_speed():
 	if is_wearing_crown: return run_speed
 	if Input.is_action_pressed("interact"): return run_speed
-	if is_carrying: return carry_speed
+	if is_carrying(): return carry_speed
 	return walk_speed
 
 func is_carrying():
@@ -135,24 +135,24 @@ func is_moving_right():
 	if is_wearing_crown: return facing_dir > 0
 	return Input.is_action_pressed("walk_right") and velocity.x > 0
 
-func animate_sprite():
-	if not is_on_floor():
-		sprite.stop()
-		sprite.frame = 3
-		return
+func play_move_sprite():
+	print('play_move_sprite')
+	print('ducking: ', ducking)
 
+	if frozen: return sprite.play("idle")
+	if ducking: return sprite.play("crawl")
+	if Input.is_action_pressed("walk_left") or Input.is_action_pressed("walk_right"):
+		return sprite.play("run")
+	return sprite.play("idle")
+
+func animate_sprite():
 	if is_moving_left():
 		sprite.flip_h = true
-		sprite.play("run")
-		return
 
 	if is_moving_right():
 		sprite.flip_h = false
-		sprite.play("run")
-		return
 
-	sprite.stop()
-	sprite.frame = 0
+	play_move_sprite()
 
 func jump():
 	$JumpSFX.play()
@@ -180,8 +180,18 @@ func process_jump():
 			jump()
 
 
-func _process(delta):
-	animate_sprite()
+# func _process(delta):
+
+func duck():
+	print('duck')
+	ducking = true
+	$PlayerCollision.get_shape().set_extents(Vector2(120, 60))
+	move_and_collide(64 * Vector2.DOWN)
+
+func unduck():
+	print('unduck')
+	ducking = false
+	$PlayerCollision.get_shape().set_extents(Vector2(60, 120))
 
 func process_bonk(slide : Vector2):
 	# if we're not trying to go up, there is no more bonk, and we should
@@ -204,6 +214,7 @@ func process_bonk(slide : Vector2):
 	velocity.y = lerp(velocity.y, slide.y, collision_momentum_dropoff / 2)
 
 func _physics_process(delta):
+	animate_sprite()
 	process_move()
 	velocity.y += pick_gravity() * delta
 	var slide = move_and_slide(velocity, Vector2.UP)
@@ -213,9 +224,12 @@ func _physics_process(delta):
 
 	process_jump()
 
+	if ducking and not Input.is_action_pressed("duck"):
+		unduck()
+
 	# [jneen] TODO: if is_carrying_crown():
-	if Input.is_action_just_pressed("duck"):
-		wear_crown()
+	if Input.is_action_just_pressed("duck") and not is_carrying():
+		duck()
 
 	# Update any GUI after doing character's work
 	Hud.get_node("UI/Coins/CoinsLabel").text = str(coins)

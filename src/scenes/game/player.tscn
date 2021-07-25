@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://src/scenes/game/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/run.png" type="Texture" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://assets/sounds/jump2.mp3" type="AudioStream" id=4]
 [ext_resource path="res://assets/sounds/land.mp3" type="AudioStream" id=5]
 [ext_resource path="res://assets/sounds/au.mp3" type="AudioStream" id=6]
+[ext_resource path="res://assets/sprites/crawl.png" type="Texture" id=7]
+[ext_resource path="res://assets/sprites/idle.png" type="Texture" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 59.9641, 112.434 )
@@ -40,12 +42,42 @@ flags = 4
 atlas = ExtResource( 2 )
 region = Rect2( 855, 0, 171, 273 )
 
+[sub_resource type="AtlasTexture" id=15]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 291, 201 )
+
+[sub_resource type="AtlasTexture" id=16]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 291, 0, 291, 201 )
+
+[sub_resource type="AtlasTexture" id=17]
+flags = 4
+atlas = ExtResource( 8 )
+region = Rect2( 0, 0, 130, 251 )
+
+[sub_resource type="AtlasTexture" id=18]
+flags = 4
+atlas = ExtResource( 8 )
+region = Rect2( 130, 0, 130, 251 )
+
 [sub_resource type="SpriteFrames" id=8]
 animations = [ {
 "frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
 "loop": true,
 "name": "run",
 "speed": 10.0
+}, {
+"frames": [ SubResource( 15 ), SubResource( 16 ) ],
+"loop": true,
+"name": "crawl",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 17 ), SubResource( 18 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
 } ]
 
 [node name="Player" type="KinematicBody2D"]
@@ -68,9 +100,9 @@ wait_time = 0.1
 wait_time = 2.0
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( -0.741341, -2.93409 )
+position = Vector2( -0.741341, -2.39219 )
 frames = SubResource( 8 )
-animation = "run"
+animation = "idle"
 
 [node name="JumpSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 4 )
