@@ -20,7 +20,8 @@ export (float, 0, 1.0) var air_friction = 0.05
 export (float, 0, 1.0) var ground_acceleration = 0.1
 export (float, 0, 1.0) var air_acceleration = 0.1
 export (float, 0, 1.0) var collision_momentum_dropoff = 0.1
-export (Vector2) var carry_offset = Vector2(64, -32)
+export (Vector2) var carry_offset = Vector2(74, -60)
+export (Vector2) var wear_offset = Vector2(25, -160)
 export (Vector2) var throw_force = Vector2(1700, -700)
 
 var coins : int = 0
@@ -29,6 +30,7 @@ var frozen : bool = false
 var is_wearing_crown : bool
 var is_ducking : bool = false
 var facing_dir : int = 0
+var worn_item
 var held_item
 var held_item_original_parent
 var buffer_jump : bool = false
@@ -53,7 +55,6 @@ func splat():
 		drop_item()
 
 	$SplatSFX.play()
-	frozen = true
 	$RespawnTimer.start()
 
 	velocity.x = 0.0
@@ -63,6 +64,8 @@ func splat():
 
 	var treasury = get_tree().get_root().get_node("Game/World/Entities/treasury")
 	self.global_position = treasury.get_global_position()
+	self.duck()
+	frozen = true
 
 func process_move():
 # warning-ignore:unused_variable
@@ -111,7 +114,6 @@ func pick_gravity():
 		return gravity_fall
 
 func carry(object):
-	print(object)
 	held_item = object
 	held_item_original_parent = object.get_parent()
 	held_item_original_parent.remove_child(object)
@@ -141,6 +143,11 @@ func wear_crown():
 func lose_crown():
 	# TODO: animation + sfx
 	is_wearing_crown = false
+	var pos = worn_item.global_position
+	remove_child(worn_item)
+	worn_item.global_position = pos
+	worn_item.enable_physics()
+	worn_item = null
 
 func is_moving_left():
 	if is_wearing_crown: return facing_dir < 0
@@ -153,18 +160,30 @@ func is_moving_right():
 func play_move_sprite():
 	if frozen: return sprite.play("idle")
 
-	var is_moving = Input.is_action_pressed("walk_left") or Input.is_action_pressed("walk_right")
+	var is_moving = is_wearing_crown or Input.is_action_pressed("walk_left") or Input.is_action_pressed("walk_right")
 
 	if ducking:
 		sprite.play("crawl")
 		if not is_moving: sprite.stop()
 		return
 
-	if Input.is_action_pressed("walk_left") or Input.is_action_pressed("walk_right"):
+	if held_item:
+		sprite.play("carry")
+		# if not is_moving:
+		# 	sprite.stop()
+		# 	sprite.frame = 7
+		return
+
+	if is_moving:
 		sprite.play("run")
 		return
 
 	sprite.play("idle")
+
+func reposition(obj, dir):
+	if not obj: return
+	if sign(obj.position.x) != sign(dir):
+		obj.position.x *= -1
 
 func animate_sprite():
 	if is_moving_left():
@@ -173,13 +192,10 @@ func animate_sprite():
 	if is_moving_right():
 		sprite.flip_h = false
 
-	if held_item:
-		var dir = 1
-		if sprite.flip_h: dir = -1
-		if sign(held_item.position.x) != sign(facing_dir):
-			held_item.position.x *= -1
-
-
+	var dir = 1
+	if sprite.flip_h: dir = -1
+	reposition(held_item, dir)
+	reposition(worn_item, dir)
 
 	play_move_sprite()
 
@@ -212,6 +228,7 @@ func process_jump():
 # func _process(delta):
 
 func duck():
+	if frozen: return
 	print('duck')
 	ducking = true
 	$PlayerCollision.get_shape().set_extents(Vector2(120, 60))
@@ -219,9 +236,16 @@ func duck():
 	move_and_collide(64 * Vector2.DOWN)
 
 func unduck():
-	print('unduck')
 	ducking = false
 	$PlayerCollision.get_shape().set_extents(Vector2(60, 120))
+
+func process_wall(slide):
+	if not (slide.x == 0 and velocity.x != 0): return
+
+	# we've run into a wall
+	if is_wearing_crown:
+		facing_dir *= -1
+		velocity.x *= -1
 
 func process_bonk(slide : Vector2):
 	# if we're not trying to go up, there is no more bonk, and we should
@@ -247,6 +271,7 @@ func direct_vector(v : Vector2):
 	return Vector2(facing_dir, 1) * v
 
 func drop_item():
+	print('drop_item')
 	var current_position = held_item.global_position
 	held_item.sleeping = false
 
@@ -272,6 +297,7 @@ func _physics_process(delta):
 	velocity.x = lerp(velocity.x, slide.x, collision_momentum_dropoff)
 
 	process_bonk(slide)
+	process_wall(slide)
 
 	process_jump()
 
@@ -279,8 +305,16 @@ func _physics_process(delta):
 		unduck()
 
 	# [jneen] TODO: if is_carrying_crown():
-	if Input.is_action_just_pressed("duck") and not is_carrying():
-		duck()
+	if Input.is_action_just_pressed("duck"):
+		if not held_item:
+			duck()
+
+		if held_item and held_item.is_crown:
+			is_wearing_crown = true
+			worn_item = held_item
+			held_item = null
+			worn_item.position = wear_offset
+
 
 func _on_InvicibleTimer_timeout():
 	$InvicibleTimer.stop()

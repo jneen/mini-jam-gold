@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://src/scenes/game/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/props/treasury.png" type="Texture" id=2]
@@ -12,10 +12,10 @@
 [ext_resource path="res://src/scenes/game/game_setup.gd" type="Script" id=10]
 [ext_resource path="res://src/scenes/game/treasury.gd" type="Script" id=11]
 [ext_resource path="res://src/scenes/game/Debuglevel.gd" type="Script" id=12]
-[ext_resource path="res://assets/props/coin.png" type="Texture" id=13]
+[ext_resource path="res://src/scenes/game/Coin.tscn" type="PackedScene" id=13]
 [ext_resource path="res://assets/font/FreePixel.ttf" type="DynamicFontData" id=14]
 [ext_resource path="res://src/scenes/game/scorelbale.gd" type="Script" id=15]
-[ext_resource path="res://src/scenes/game/coin.gd" type="Script" id=16]
+[ext_resource path="res://src/scenes/game/Crown.tscn" type="PackedScene" id=16]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 16, 4, 8, 8, 4, 16, 0, 112, 0, 120, 4, 124, 8, 128, 16, 128, 112, 124, 120, 120, 124, 112, 128, 16, 128, 8, 124, 4, 120, 0, 112 )
@@ -379,15 +379,6 @@ points = PoolVector2Array( 128, 128, 0, 128, 0, 0, 128, 0 )
 } ]
 14/z_index = 0
 
-[sub_resource type="PhysicsMaterial" id=21]
-rough = true
-
-[sub_resource type="CircleShape2D" id=22]
-radius = 52.2538
-
-[sub_resource type="RectangleShape2D" id=23]
-extents = Vector2( 64, 64 )
-
 [sub_resource type="RectangleShape2D" id=19]
 extents = Vector2( 640, 397.856 )
 
@@ -423,33 +414,24 @@ tile_set = SubResource( 16 )
 cell_size = Vector2( 128, 128 )
 cell_custom_transform = Transform2D( 0, 0, 0, 64, 0, 0 )
 format = 1
-tile_data = PoolIntArray( -393224, 0, 0, -393223, 0, 0, -393222, 0, 0, -393221, 0, 0, -393220, 0, 0, -393219, 0, 0, -393218, 0, 0, -393217, 0, 0, -458752, 0, 0, -458751, 0, 0, -458750, 0, 0, -458749, 0, 0, -458748, 0, 0, -458747, 0, 0, -458746, 0, 0, -458745, 0, 0, -458744, 0, 0, -458743, 0, 0, -458742, 0, 0, -458741, 0, 0, -327689, 0, 0, -327688, 0, 0, -393211, 0, 0, -393205, 0, 0, -262154, 0, 0, -262153, 0, 0, -327675, 0, 0, -327669, 0, 0, -196618, 0, 0, -262133, 0, 0, -131082, 0, 0, -131077, 0, 0, -131076, 0, 0, -131075, 0, 0, -131074, 0, 0, -131073, 0, 0, -196600, 0, 0, -196599, 0, 0, -196598, 0, 0, -196597, 0, 0, -65546, 0, 0, -65541, 0, 0, -65537, 0, 0, -131072, 0, 0, -131071, 0, 0, -131070, 0, 0, -131061, 0, 0, -10, 0, 0, -1, 0, 0, -65534, 0, 0, -65525, 0, 3, 65526, 0, 0, 65535, 0, 2, 2, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 11, 0, 3, 131060, 0, 0, 131061, 0, 0, 131062, 0, 0, 131063, 0, 5, 131067, 0, 1, 65538, 0, 0, 65547, 0, 0, 65548, 0, 0, 196603, 0, 3, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131083, 0, 0, 131084, 0, 0, 262139, 0, 3, 196617, 0, 0, 196618, 0, 0, 196619, 0, 0, 196620, 0, 0, 327672, 0, 0, 327673, 0, 0, 327674, 0, 0, 327675, 0, 0, 262155, 0, 0, 393208, 0, 0, 393211, 0, 0, 327691, 0, 3, 458744, 0, 0, 458747, 0, 0, 458748, 0, 0, 458749, 0, 0, 458750, 0, 0, 458751, 0, 5, 393217, 0, 4, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 0, 0, 393223, 0, 0, 393224, 0, 0, 393225, 0, 0, 393226, 0, 0, 393227, 0, 7, 393228, 0, 0, 393229, 0, 0, 393230, 0, 5 )
+tile_data = PoolIntArray( -393224, 0, 0, -393223, 0, 0, -393222, 0, 0, -393221, 0, 0, -393220, 0, 0, -393219, 0, 0, -393218, 0, 0, -393217, 0, 0, -458752, 0, 0, -458751, 0, 0, -458750, 0, 0, -458749, 0, 0, -458748, 0, 0, -458747, 0, 0, -458746, 0, 0, -458745, 0, 0, -458744, 0, 0, -458743, 0, 0, -458742, 0, 0, -458741, 0, 0, -327689, 0, 0, -327688, 0, 0, -393211, 0, 0, -393205, 0, 0, -262154, 0, 0, -262153, 0, 0, -327675, 0, 0, -327669, 0, 0, -196618, 0, 0, -262133, 0, 0, -131082, 0, 0, -131077, 0, 0, -131076, 0, 0, -131075, 0, 0, -131074, 0, 0, -131073, 0, 0, -196600, 0, 0, -196599, 0, 0, -196598, 0, 0, -196597, 0, 0, -65546, 0, 0, -65541, 0, 0, -65537, 0, 0, -131072, 0, 0, -131071, 0, 0, -131070, 0, 0, -131069, 0, 0, -131061, 0, 0, -10, 0, 0, -65525, 0, 3, 65526, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 11, 0, 3, 131060, 0, 0, 131061, 0, 0, 131062, 0, 0, 131063, 0, 5, 131067, 0, 1, 65547, 0, 0, 65548, 0, 0, 196603, 0, 3, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131083, 0, 0, 131084, 0, 0, 262139, 0, 3, 196617, 0, 0, 196618, 0, 0, 196619, 0, 0, 196620, 0, 0, 327672, 0, 0, 327673, 0, 0, 327674, 0, 0, 327675, 0, 0, 262155, 0, 0, 393208, 0, 0, 393211, 0, 0, 327691, 0, 3, 458744, 0, 0, 458747, 0, 0, 458748, 0, 0, 458749, 0, 0, 458750, 0, 0, 458751, 0, 5, 393217, 0, 4, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 0, 0, 393223, 0, 0, 393224, 0, 0, 393225, 0, 0, 393226, 0, 0, 393227, 0, 7, 393228, 0, 0, 393229, 0, 0, 393230, 0, 5 )
 
 [node name="Entities" type="Node2D" parent="World"]
 
-[node name="Coin" type="RigidBody2D" parent="World/Entities" groups=[
-"Coin",
-]]
-position = Vector2( -724.504, 450.769 )
-mode = 2
-mass = 0.00612245
-physics_material_override = SubResource( 21 )
-gravity_scale = 32.0
-script = ExtResource( 16 )
+[node name="Coin" parent="World/Entities" instance=ExtResource( 13 )]
+position = Vector2( 1214.66, -452.441 )
 
-[node name="Sprite" type="Sprite" parent="World/Entities/Coin"]
-texture = ExtResource( 13 )
+[node name="Coin2" parent="World/Entities" instance=ExtResource( 13 )]
+position = Vector2( -191.574, 705.155 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Entities/Coin"]
-position = Vector2( 0, -1.05946 )
-shape = SubResource( 22 )
+[node name="Coin3" parent="World/Entities" instance=ExtResource( 13 )]
+position = Vector2( -381.11, -448.365 )
 
-[node name="GrabCooldownTimer" type="Timer" parent="World/Entities/Coin"]
+[node name="Crown" parent="World/Entities" instance=ExtResource( 16 )]
+position = Vector2( 319.969, -319.969 )
 
-[node name="Coininteractzone" type="Area2D" parent="World/Entities/Coin"]
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="World/Entities/Coin/Coininteractzone"]
-shape = SubResource( 23 )
+[node name="Crown2" parent="World/Entities" instance=ExtResource( 16 )]
+position = Vector2( -845.779, 448.365 )
 
 [node name="treasury" type="Sprite" parent="World/Entities"]
 position = Vector2( -1270.92, 693.597 )
@@ -464,6 +446,9 @@ shape = SubResource( 19 )
 
 [node name="Spikes" parent="World/Entities" instance=ExtResource( 3 )]
 position = Vector2( 59.026, 831.915 )
+
+[node name="Spikes2" parent="World/Entities" instance=ExtResource( 3 )]
+position = Vector2( -1090.42, 90.0752 )
 
 [node name="Players" type="Node2D" parent="."]
 
@@ -552,8 +537,5 @@ bus = "Music"
 [node name="Debuglevel" type="Node2D" parent="."]
 script = ExtResource( 12 )
 
-[connection signal="timeout" from="World/Entities/Coin/GrabCooldownTimer" to="World/Entities/Coin" method="_on_GrabCooldownTimer_timeout"]
-[connection signal="body_entered" from="World/Entities/Coin/Coininteractzone" to="World/Entities/Coin" method="_on_Coininteractzone_body_entered"]
-[connection signal="body_exited" from="World/Entities/Coin/Coininteractzone" to="World/Entities/Coin" method="_on_Coininteractzone_body_exited"]
 [connection signal="body_entered" from="World/Entities/treasury/Area2D" to="World/Entities/treasury" method="_on_Area2D_body_entered"]
 [connection signal="timeout" from="Cam/CL/Label/Timer" to="Cam/CL/Label" method="_on_Timer_timeout"]

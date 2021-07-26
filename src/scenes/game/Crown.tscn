@@ -1,26 +1,29 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/scenes/game/coin.gd" type="Script" id=1]
-[ext_resource path="res://assets/props/coin.png" type="Texture" id=2]
+[ext_resource path="res://assets/props/crown.png" type="Texture" id=2]
 
-[sub_resource type="PhysicsMaterial" id=21]
+[sub_resource type="PhysicsMaterial" id=1]
 rough = true
 
-[sub_resource type="CircleShape2D" id=22]
+[sub_resource type="CircleShape2D" id=2]
 radius = 52.2538
 
-[sub_resource type="RectangleShape2D" id=23]
-extents = Vector2( 74.4506, 73.7745 )
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 76.4907, 69.3528 )
 
-[node name="Coin" type="RigidBody2D" groups=[
+[node name="Crown" type="RigidBody2D" groups=[
 "Coin",
 ]]
 mode = 2
-physics_material_override = SubResource( 21 )
+physics_material_override = SubResource( 1 )
 gravity_scale = 32.0
 script = ExtResource( 1 )
+is_crown = true
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0.923263, 1.832 )
+scale = Vector2( 0.764941, 0.764941 )
 texture = ExtResource( 2 )
 
 [node name="GrabCooldownTimer" type="Timer" parent="."]
@@ -28,12 +31,13 @@ wait_time = 0.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -1.05946 )
-shape = SubResource( 22 )
+shape = SubResource( 2 )
 
 [node name="Coininteractzone" type="Area2D" parent="."]
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Coininteractzone"]
-shape = SubResource( 23 )
+shape = SubResource( 3 )
 
+[connection signal="timeout" from="GrabCooldownTimer" to="." method="_on_GrabCooldownTimer_timeout"]
 [connection signal="body_entered" from="Coininteractzone" to="." method="_on_Coininteractzone_body_entered"]
 [connection signal="body_exited" from="Coininteractzone" to="." method="_on_Coininteractzone_body_exited"]
