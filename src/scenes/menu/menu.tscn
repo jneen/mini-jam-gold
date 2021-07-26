@@ -400,18 +400,26 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
 margin_top = 10.0
-text = "Tabrix (tabrixx9): Main developer, Map designer, Game designer
-CedarTyan: Artist, Achievement designer, Beta tester
-jneen: Music designer & compositor, Map designer, Beta tester, Game designer
-Ferkeshu: Sound designer, Beta tester
-ROA: Arist, Achievement designer, Game designer, Map designer, Beta tester
+text = "~ music, physics and character programming ~
+jneen
+
+~ character design ~
+CedarTyan
+
+~ background and prop design ~
+ROA
+
+~ programming ~
+Tabrix (tabrixx9)
+
+~ sound design ~
+Ferkeshu
 
 Made with love for the Mini Jam 85
 
-Props:
-Engine: Godot Engine
-And the awesome Godot community.
-icons8.net for some of the icons"
+Made using the Godot Engine
+Thanks to the awesome Godot community."
+align = 1
 autowrap = true
 clip_text = true
 __meta__ = {

@@ -224,9 +224,6 @@ func process_jump():
 			buffer_jump = false
 			jump()
 
-
-# func _process(delta):
-
 func duck():
 	if frozen: return
 	ducking = true

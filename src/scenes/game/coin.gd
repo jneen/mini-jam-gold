@@ -7,13 +7,13 @@ export (bool) var is_crown
 
 var cooldown = false
 
-func _on_Coininteractzone_body_entered(body):
-	print('cooldown: ', cooldown, $GrabCooldownTimer.time_left)
+func _process(delta):
 	if cooldown: return
-	if not body.is_in_group("Player"): return
 	if not Input.is_action_pressed("interact"): return
-	if body.held_item: return
-	body.carry(self)
+
+	for body in $Coininteractzone.get_overlapping_bodies():
+		if body.is_in_group("Player") and not body.held_item:
+			body.carry(self)
 
 func disable_physics():
 	$CollisionShape2D.set_deferred('disabled', true)

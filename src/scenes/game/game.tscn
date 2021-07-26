@@ -378,17 +378,17 @@ points = PoolVector2Array( 128, 128, 0, 128, 0, 0, 128, 0 )
 } ]
 14/z_index = 0
 
-[sub_resource type="RectangleShape2D" id=19]
+[sub_resource type="RectangleShape2D" id=17]
 extents = Vector2( 640, 397.856 )
 
-[sub_resource type="DynamicFontData" id=21]
+[sub_resource type="DynamicFontData" id=18]
 font_path = "res://assets/font/FreePixel.ttf"
 
-[sub_resource type="DynamicFont" id=22]
+[sub_resource type="DynamicFont" id=19]
 size = 120
-font_data = SubResource( 21 )
+font_data = SubResource( 18 )
 
-[sub_resource type="GDScript" id=23]
+[sub_resource type="GDScript" id=20]
 script/source = "extends Label
 
 var timerleft = 60
@@ -406,19 +406,19 @@ func _on_Timer_timeout():
 	$Timer.start()
 "
 
-[sub_resource type="RectangleShape2D" id=17]
+[sub_resource type="RectangleShape2D" id=21]
 extents = Vector2( 2050, 78.9944 )
 
-[sub_resource type="RectangleShape2D" id=18]
+[sub_resource type="RectangleShape2D" id=22]
 extents = Vector2( 78.994, 1202 )
 
-[sub_resource type="DynamicFont" id=24]
+[sub_resource type="DynamicFont" id=23]
 size = 53
-font_data = SubResource( 21 )
+font_data = SubResource( 18 )
 
-[sub_resource type="DynamicFont" id=20]
+[sub_resource type="DynamicFont" id=24]
 size = 40
-font_data = SubResource( 21 )
+font_data = SubResource( 18 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 10 )
@@ -470,7 +470,7 @@ script = ExtResource( 11 )
 [node name="Area2D" type="Area2D" parent="World/Entities/treasury"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Entities/treasury/Area2D"]
-shape = SubResource( 19 )
+shape = SubResource( 17 )
 
 [node name="Score" type="Label" parent="World/Entities/treasury"]
 anchor_left = 0.5
@@ -479,10 +479,10 @@ margin_left = -994.701
 margin_top = -537.022
 margin_right = -334.701
 margin_bottom = -417.022
-custom_fonts/font = SubResource( 22 )
+custom_fonts/font = SubResource( 19 )
 text = "HOARD: 0 GP"
 align = 1
-script = SubResource( 23 )
+script = SubResource( 20 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -508,15 +508,15 @@ position = Vector2( 1781.06, 1539.34 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Environnment"]
 visible = false
 position = Vector2( -1675.86, -558.311 )
-shape = SubResource( 17 )
+shape = SubResource( 21 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Environnment"]
 position = Vector2( -3399.71, -1594.67 )
-shape = SubResource( 18 )
+shape = SubResource( 22 )
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="Environnment"]
 position = Vector2( -164.186, -1796.03 )
-shape = SubResource( 18 )
+shape = SubResource( 22 )
 
 [node name="Cam" type="Camera2D" parent="."]
 current = true
@@ -536,7 +536,7 @@ anchor_right = 0.5
 margin_left = -321.0
 margin_right = 321.0
 margin_bottom = 477.0
-custom_fonts/font = SubResource( 24 )
+custom_fonts/font = SubResource( 23 )
 text = "60"
 align = 1
 script = ExtResource( 15 )
@@ -561,7 +561,7 @@ __meta__ = {
 anchor_top = 0.271548
 anchor_right = 1.0
 anchor_bottom = 0.783215
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 24 )
 text = "SCORE: X
 Share your score in the comments !
 
