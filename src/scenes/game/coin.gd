@@ -8,6 +8,7 @@ export (bool) var is_crown
 var cooldown = false
 
 func _on_Coininteractzone_body_entered(body):
+	print('cooldown: ', cooldown, $GrabCooldownTimer.time_left)
 	if cooldown: return
 	if not body.is_in_group("Player"): return
 	if not Input.is_action_pressed("interact"): return
@@ -26,4 +27,5 @@ func enable_physics():
 	self.gravity_scale = original_gravity_scale
 
 func _on_GrabCooldownTimer_timeout():
+	$GrabCooldownTimer.stop()
 	cooldown = false

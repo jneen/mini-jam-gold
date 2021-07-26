@@ -35,5 +35,6 @@ shape = SubResource( 22 )
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Coininteractzone"]
 shape = SubResource( 23 )
 
+[connection signal="timeout" from="GrabCooldownTimer" to="." method="_on_GrabCooldownTimer_timeout"]
 [connection signal="body_entered" from="Coininteractzone" to="." method="_on_Coininteractzone_body_entered"]
 [connection signal="body_exited" from="Coininteractzone" to="." method="_on_Coininteractzone_body_exited"]
