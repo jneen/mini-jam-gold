@@ -229,7 +229,6 @@ func process_jump():
 
 func duck():
 	if frozen: return
-	print('duck')
 	ducking = true
 	$PlayerCollision.get_shape().set_extents(Vector2(120, 60))
 # warning-ignore:return_value_discarded
@@ -271,7 +270,6 @@ func direct_vector(v : Vector2):
 	return Vector2(facing_dir, 1) * v
 
 func drop_item():
-	print('drop_item')
 	var current_position = held_item.global_position
 	held_item.sleeping = false
 

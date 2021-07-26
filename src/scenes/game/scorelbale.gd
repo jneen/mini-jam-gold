@@ -1,6 +1,6 @@
 extends Label
 
-var timerleft = 5
+var timerleft = 60
 
 func _on_Timer_timeout():
 	if timerleft == 1:
